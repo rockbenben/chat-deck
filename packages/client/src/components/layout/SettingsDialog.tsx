@@ -16,7 +16,7 @@ const PROVIDERS = [
   { key: 'anthropic', name: 'claude-code', label: 'Claude', placeholder: 'sk-ant-...', hint: 'console.anthropic.com', needsKey: false },
   { key: 'openai', name: 'codex', label: 'OpenAI', placeholder: 'sk-...', hint: 'platform.openai.com', needsKey: true },
   { key: 'gemini', name: 'gemini', label: 'Gemini', placeholder: 'AIza...', hint: 'aistudio.google.com/apikey', needsKey: true },
-  { key: 'qwen', name: 'qwen', label: 'Qwen', placeholder: 'sk-...', hint: 'chat.qwen.ai', needsKey: false },
+  { key: 'qwen', name: 'qwen', label: 'Qwen', placeholder: 'sk-...', hint: 'bailian.console.aliyun.com', needsKey: false },
   { key: 'deepseek', name: 'deepseek', label: 'DeepSeek', placeholder: 'sk-...', hint: 'platform.deepseek.com', needsKey: true },
   { key: 'groq', name: 'groq', label: 'Groq', placeholder: 'gsk_...', hint: 'console.groq.com', needsKey: true },
   { key: '', name: 'ollama', label: 'Ollama', placeholder: '', hint: 'localhost:11434 (local)', needsKey: false },

@@ -5,6 +5,7 @@ export interface Profile {
   cliProvider: string
   model?: string        // default model (optional)
   icon?: string
+  stateless?: boolean   // when true, each message sent without conversation history
   createdAt: string
   updatedAt: string
 }
@@ -60,7 +61,7 @@ export interface ProviderInfo {
   defaultModel: string
 }
 
-export type CreateProfileInput = Pick<Profile, 'name' | 'systemPrompt' | 'cliProvider' | 'icon'>
+export type CreateProfileInput = Pick<Profile, 'name' | 'systemPrompt' | 'cliProvider' | 'icon' | 'stateless'>
 export type UpdateProfileInput = Partial<CreateProfileInput>
 export type CreateSessionInput = Pick<Session, 'profileId' | 'title'>
 
@@ -141,7 +142,7 @@ export type WsServerMessage =
 
 // WebSocket message types (client → server)
 export type WsClientMessage =
-  | { type: 'send'; sessionId: string; content: string; provider?: string; model?: string; regenerate?: boolean }
+  | { type: 'send'; sessionId: string; content: string; provider?: string; model?: string; regenerate?: boolean; stateless?: boolean }
   | { type: 'abort'; sessionId: string }
-  | { type: 'compare'; sessionId: string; content: string; providers: string[] }
+  | { type: 'compare'; sessionId: string; content: string; providers: string[]; stateless?: boolean }
   | { type: 'save-winner'; sessionId: string; content: string; comparison?: ComparisonRecord }

@@ -13,6 +13,7 @@ export class ProfileService {
       systemPrompt: input.systemPrompt,
       cliProvider: input.cliProvider,
       icon: input.icon,
+      stateless: input.stateless,
       createdAt: now,
       updatedAt: now,
     }
@@ -36,6 +37,7 @@ export class ProfileService {
     if (input.systemPrompt !== undefined) existing.systemPrompt = input.systemPrompt
     if (input.cliProvider !== undefined) existing.cliProvider = input.cliProvider
     if (input.icon !== undefined) existing.icon = input.icon
+    if (input.stateless !== undefined) existing.stateless = input.stateless
     existing.updatedAt = new Date().toISOString()
     await this.storage.writeJSON('profiles', id, existing)
     return existing

@@ -2,11 +2,29 @@
 
 > 365 Open Source Plan #006 · Local AI chat hub — one interface for all your providers
 
-A local AI chat hub. One interface for all your AI providers, one click to start.
+[中文文档](README.zh.md)
 
-You already have Claude, Qwen, or Ollama installed on your machine. But every time you want to use them, you open a terminal, type commands, set up system prompts. ChatDeck gives you a web UI where each **Profile** is a ready-to-go AI setup: provider + system prompt, pre-configured. Click a profile, chat instantly. All conversations stay organized and easy to find later.
+A local AI chat hub that doubles as an AI toolbox. One interface for all your AI providers, one click to start.
 
-It calls the CLI tools on your machine directly, so you chat for free using your existing subscriptions. No API keys required (but supported if you prefer).
+![Chat View](docs/chat-view.png)
+
+## Why ChatDeck
+
+**AI as a tool, not just a chatbot.** Most AI interfaces are built for multi-turn conversations. But many tasks don't need context — you just want to throw text at an AI and get a result. Text polishing, translation, summarization, code review... you do these dozens of times a day, and previous conversations only get in the way.
+
+ChatDeck's **Stateless mode** strips all history from every request. Each message is processed from scratch with only your system prompt — no context leaking in, no pollution from previous turns. Create a "Polish Text" profile, and it becomes a dedicated text-polishing tool: input in, result out, clean every time.
+
+Combined with **Profile presets** (provider + system prompt, ready to go) and **Compare mode** (same input, multiple providers side-by-side), ChatDeck turns your local AI tools into a fast, organized workflow.
+
+### Highlights
+
+- **Stateless mode** - Zero context per message. Each request = system prompt + your input. Ideal for text editing, translation, and any high-frequency single-turn task
+- **Profile presets** - Pre-configure provider + system prompt. Click to use, no setup each time
+- **Compare mode** - Send the same prompt to multiple providers, pick the best result
+- **Free to use** - Calls local CLI tools (`claude`, `qwen`, `ollama`) directly, uses your existing subscriptions. API keys optional
+- **7 providers** - Claude, OpenAI, Gemini, Qwen, DeepSeek, Groq, Ollama
+
+![Compare Mode](docs/compare-mode.png)
 
 ## Quick Start
 
@@ -23,17 +41,17 @@ Or use startup scripts: `start.bat` (Windows) / `bash start.sh` (macOS/Linux).
 
 ## How It Works
 
-1. **Create a Profile** - Pick a provider (e.g. Claude), set a system prompt if needed, give it a name
-2. **Click and Chat** - Select the profile from the sidebar, everything is ready, just type your message
-3. **Come Back Anytime** - All sessions are saved under each profile, easy to find and continue later
+1. **Create a Profile** - Pick a provider, set a system prompt, give it a name. Stateless mode is on by default
+2. **Click and Chat** - Select the profile from the sidebar, just type your message
+3. **Come Back Anytime** - All sessions are saved under each profile, easy to find and continue
 
-## Features
+## All Features
 
 - **One click to chat** - Pick a profile, start talking. No setup, no commands
-- **Free to use** - Calls local CLI tools (`claude`, `qwen`, `ollama`) directly, uses your existing subscriptions
+- **Stateless mode** - Enabled per profile or toggled per session. Perfect for repetitive text tasks
+- **Compare mode** - Side-by-side provider comparison
 - **7 providers** - Claude, OpenAI, Gemini, Qwen, DeepSeek, Groq, Ollama
-- **Conversations organized** - Every chat is saved under its profile for easy lookup
-- **Compare mode** - Optionally send the same prompt to multiple providers side-by-side
+- **Free via CLI** - Uses locally installed tools, no API cost
 - **Session fork** - Edit any message and branch into a new conversation
 - **Export** - Download conversations as Markdown
 - **Dark mode** and **Chinese/English** interface
@@ -48,6 +66,17 @@ ChatDeck works in two ways per provider:
 | **API** | Direct API calls with your key | Pay per token |
 
 CLI tools are auto-detected. To configure API keys, click the gear icon in the top-right corner.
+
+### API Key Sources
+
+| Provider | Where to get the key |
+|----------|---------------------|
+| Claude | [console.anthropic.com](https://console.anthropic.com/) (optional — works free via `claude` CLI) |
+| Gemini | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) |
+| Qwen | [bailian.console.aliyun.com](https://bailian.console.aliyun.com/) (DashScope API) |
+| DeepSeek | [platform.deepseek.com](https://platform.deepseek.com/) |
+| Groq | [console.groq.com](https://console.groq.com/) |
+| Ollama | No key needed (local) |
 
 ## Keyboard Shortcuts
 

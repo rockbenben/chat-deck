@@ -35,6 +35,8 @@ export const en = {
     selectProvider: 'Select a provider',
     notInstalled: 'not installed',
     systemPrompt: 'System Prompt',
+    stateless: 'Stateless mode',
+    statelessHint: 'Each message sent with system prompt only, no conversation history',
     systemPromptPlaceholder: 'You are a helpful assistant that...',
     cancel: 'Cancel',
     save: 'Save',
@@ -71,6 +73,8 @@ export const en = {
     defaultProfile: 'Default (profile)',
     pickResponse: 'Pick this response',
     compareEmpty: 'Send a message in compare mode to see responses side by side',
+    statelessOn: 'Stateless ON',
+    stateless: 'Stateless',
   },
   message: {
     copy: 'Copy',

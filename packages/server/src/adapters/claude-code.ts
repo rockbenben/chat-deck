@@ -1,7 +1,8 @@
 import type { Message } from '@chat-deck/shared'
 import { BaseAdapter, type ApiRequest } from './base.js'
-import type { ModelInfo } from './types.js'
+import type { ModelInfo, SendMessageOptions } from './types.js'
 import type { ConfigService } from '../services/config.js'
+import { spawnCLI } from './cli-utils.js'
 
 export class ClaudeCodeAdapter extends BaseAdapter {
   name = 'claude-code'
@@ -39,5 +40,30 @@ export class ClaudeCodeAdapter extends BaseAdapter {
     if (data.type !== 'content_block_delta') return null
     const delta = data.delta as { text?: string } | undefined
     return delta?.text || null
+  }
+
+  /** Use claude CLI flags (--system-prompt, -p) instead of embedding system prompt in the text. */
+  protected sendViaCLI(opts: SendMessageOptions): { abort: () => void } {
+    const args = ['-p', '--output-format', 'text']
+    if (opts.systemPrompt) {
+      args.push('--system-prompt', opts.systemPrompt)
+    }
+    // Build user prompt: single message or multi-turn history
+    const messages = opts.messages
+    let prompt: string
+    if (messages.length === 1) {
+      prompt = messages[0].content
+    } else {
+      const history = messages.slice(0, -1)
+        .map(m => `${m.role === 'user' ? 'User' : 'Assistant'}: ${m.content}`)
+        .join('\n')
+      prompt = `Previous conversation:\n${history}\n\n${messages[messages.length - 1].content}`
+    }
+    args.push(prompt)
+    return spawnCLI(this.command, args, {
+      onChunk: opts.onChunk,
+      onDone: () => opts.onDone({ mode: 'cli' }),
+      onError: opts.onError,
+    })
   }
 }

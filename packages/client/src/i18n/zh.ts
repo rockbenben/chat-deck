@@ -37,6 +37,8 @@ export const zh: Translations = {
     selectProvider: '选择服务商',
     notInstalled: '未安装',
     systemPrompt: '系统提示词',
+    stateless: '独立对话模式',
+    statelessHint: '每条消息仅携带系统提示词，不附带历史对话',
     systemPromptPlaceholder: '你是一个有帮助的助手...',
     cancel: '取消',
     save: '保存',
@@ -73,6 +75,8 @@ export const zh: Translations = {
     defaultProfile: '默认（配置）',
     pickResponse: '选择此回复',
     compareEmpty: '在对比模式下发送消息，查看各服务商的并排回复',
+    statelessOn: '独立对话 开启',
+    stateless: '独立对话',
   },
   message: {
     copy: '复制',

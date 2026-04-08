@@ -18,7 +18,7 @@ export function createProfileRoutes(profiles: ProfileService, sessions: SessionS
   }))
 
   router.post('/', asyncHandler(async (req, res) => {
-    const { name, systemPrompt, cliProvider, icon } = req.body
+    const { name, systemPrompt, cliProvider, icon, stateless } = req.body
 
     const errors: string[] = []
     if (!name || typeof name !== 'string' || name.trim().length === 0) {
@@ -34,14 +34,14 @@ export function createProfileRoutes(profiles: ProfileService, sessions: SessionS
       return res.status(400).json({ error: errors.join('; ') })
     }
 
-    const profile = await profiles.create({ name, systemPrompt, cliProvider, icon })
+    const profile = await profiles.create({ name, systemPrompt, cliProvider, icon, stateless })
     res.status(201).json(profile)
   }))
 
   router.put('/:id', asyncHandler(async (req, res) => {
     // Only allow known mutable fields — prevent overwriting id/createdAt
-    const { name, systemPrompt, cliProvider, icon } = req.body
-    const updated = await profiles.update(req.params.id, { name, systemPrompt, cliProvider, icon })
+    const { name, systemPrompt, cliProvider, icon, stateless } = req.body
+    const updated = await profiles.update(req.params.id, { name, systemPrompt, cliProvider, icon, stateless })
     if (!updated) return res.status(404).json({ error: 'Profile not found' })
     res.json(updated)
   }))

@@ -4,7 +4,7 @@ import type { ProfileService } from '../services/profile.js'
 import type { AdapterRegistry } from '../adapters/registry.js'
 import { sendJSON, autoTitleSession } from './utils.js'
 
-interface CompareMessage { type: 'compare'; sessionId: string; content: string; providers: string[] }
+interface CompareMessage { type: 'compare'; sessionId: string; content: string; providers: string[]; stateless?: boolean }
 
 export class CompareHandler {
   private activeCompares = new Map<string, { handles: Array<{ abort: () => void }>; remaining: number; ws: WebSocket }>()
@@ -50,6 +50,12 @@ export class CompareHandler {
     }
     if (!updatedSession) return
 
+    // Stateless mode: send only the current user message with system prompt, no history
+    const stateless = msg.stateless ?? profile.stateless ?? false
+    const messagesToSend = stateless
+      ? updatedSession.messages.slice(-1)
+      : updatedSession.messages
+
     const handles: Array<{ abort: () => void }> = []
     const entry = { handles, remaining: providers.length, ws }
     this.activeCompares.set(msg.sessionId, entry)
@@ -68,7 +74,7 @@ export class CompareHandler {
 
       const handle = adapter.sendMessage({
         systemPrompt: profile.systemPrompt,
-        messages: updatedSession.messages,
+        messages: messagesToSend,
         sessionMeta: session.adapterMeta,
         onChunk: (text: string) => {
           if (completedProviders.has(providerName)) return

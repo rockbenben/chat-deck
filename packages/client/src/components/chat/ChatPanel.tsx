@@ -41,11 +41,20 @@ export function ChatPanel() {
   const hasMoreMessages = useAppStore(s => s.hasMoreMessages)
   const loadMoreMessages = useAppStore(s => s.loadMoreMessages)
   const activeProviderNames = useMemo(() => providers.filter(p => p.installed && p.enabled).map(p => p.name), [providers])
+  const selectedProfileId = useAppStore(s => s.selectedProfileId)
+  const profiles = useAppStore(s => s.profiles)
+  const currentProfile = useMemo(() => profiles.find(p => p.id === selectedProfileId) ?? null, [profiles, selectedProfileId])
 
   const [isStreaming, setIsStreaming] = useState(false)
   const [isWaiting, setIsWaiting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [activeProvider, setActiveProvider] = useState<string | null>(null)
+  const [stateless, setStateless] = useState(false)
+
+  // Sync stateless toggle with profile setting (on profile switch or profile edit)
+  useEffect(() => {
+    setStateless(currentProfile?.stateless ?? false)
+  }, [currentProfile?.id, currentProfile?.stateless]) // eslint-disable-line react-hooks/exhaustive-deps
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
   const prevSessionRef = useRef<string | null>(null)
 
@@ -173,6 +182,7 @@ export function ChatPanel() {
         sessionId: selectedSessionId,
         content,
         providers: activeProviderNames,
+        stateless: stateless || undefined,
       })
       if (!sent) {
         setError(t.error.notConnected)
@@ -185,13 +195,14 @@ export function ChatPanel() {
         sessionId: selectedSessionId,
         content,
         provider: activeProvider || undefined,
+        stateless: stateless || undefined,
       })
       if (!sent) {
         setError(t.error.notConnected)
         resetStreamState()
       }
     }
-  }, [selectedSessionId, addOptimisticMessage, clearStreamTimeout, resetStreamState, compareMode, activeProviderNames, initCompare, activeProvider, t])
+  }, [selectedSessionId, addOptimisticMessage, clearStreamTimeout, resetStreamState, compareMode, activeProviderNames, initCompare, activeProvider, stateless, t])
 
   const handleAbort = useCallback(() => {
     if (!selectedSessionId) return
@@ -253,6 +264,7 @@ export function ChatPanel() {
         content: prevUserMsg.content,
         regenerate: true,
         provider: activeProvider || undefined,
+        stateless: stateless || undefined,
       })
       if (!sent) {
         setError(t.error.notConnected)
@@ -339,6 +351,17 @@ export function ChatPanel() {
             <Download className="w-3.5 h-3.5" />
           </button>
         )}
+        {/* Stateless mode toggle */}
+        <button
+          onClick={() => setStateless(!stateless)}
+          className={`px-3 py-1.5 text-xs font-medium rounded-lg border transition-colors ${
+            stateless
+              ? 'bg-amber-500 text-white border-amber-500'
+              : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border-slate-200 dark:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-700'
+          }`}
+        >
+          {stateless ? t.chat.statelessOn : t.chat.stateless}
+        </button>
         {/* Compare mode toggle */}
         <button
           onClick={() => {

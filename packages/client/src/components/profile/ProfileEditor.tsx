@@ -40,6 +40,7 @@ export function ProfileEditor() {
   const [systemPrompt, setSystemPrompt] = useState('')
   const [cliProvider, setCliProvider] = useState('')
   const [icon, setIcon] = useState('')
+  const [stateless, setStateless] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
 
@@ -51,11 +52,13 @@ export function ProfileEditor() {
       setSystemPrompt(editingProfile.systemPrompt)
       setCliProvider(editingProfile.cliProvider)
       setIcon(editingProfile.icon || '')
+      setStateless(editingProfile.stateless ?? false)
     } else {
       setName('')
       setSystemPrompt('')
       setCliProvider(providers.find(p => p.installed)?.name || '')
       setIcon('')
+      setStateless(true)
     }
   }, [editingProfile, providers])
 
@@ -64,7 +67,7 @@ export function ProfileEditor() {
     setSubmitting(true)
     setSubmitError(null)
     try {
-      const input = { name, systemPrompt, cliProvider, icon: icon || undefined }
+      const input = { name, systemPrompt, cliProvider, icon: icon || undefined, stateless }
       if (isEditing) {
         await updateProfile(editingProfile.id, input)
       } else {
@@ -132,6 +135,17 @@ export function ProfileEditor() {
               rows={8}
             />
           </div>
+
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={stateless}
+              onChange={(e) => setStateless(e.target.checked)}
+              className="rounded border-input"
+            />
+            <span className="text-sm font-medium">{t.profile.stateless}</span>
+            <span className="text-xs text-muted-foreground">{t.profile.statelessHint}</span>
+          </label>
         </div>
 
         {submitError && (

@@ -7,6 +7,7 @@ interface WsOutgoing {
   provider?: string
   model?: string
   comparison?: Record<string, unknown>
+  stateless?: boolean
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any -- generic event data; consumers narrow the type

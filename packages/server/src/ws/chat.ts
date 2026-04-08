@@ -5,9 +5,9 @@ import type { AdapterRegistry } from '../adapters/registry.js'
 import { CompareHandler } from './compare.js'
 import { sendJSON, autoTitleSession } from './utils.js'
 
-interface SendMessage { type: 'send'; sessionId: string; content: string; regenerate?: boolean; provider?: string; model?: string }
+interface SendMessage { type: 'send'; sessionId: string; content: string; regenerate?: boolean; provider?: string; model?: string; stateless?: boolean }
 interface AbortMessage { type: 'abort'; sessionId: string }
-interface CompareMessage { type: 'compare'; sessionId: string; content: string; providers: string[] }
+interface CompareMessage { type: 'compare'; sessionId: string; content: string; providers: string[]; stateless?: boolean }
 interface SaveWinnerMessage { type: 'save-winner'; sessionId: string; content: string; comparison?: Record<string, unknown> }
 type ClientMessage = SendMessage | AbortMessage | CompareMessage | SaveWinnerMessage
 
@@ -89,12 +89,18 @@ export class ChatHandler {
     }
     if (!updatedSession) return
 
+    // Stateless mode: send only the current user message with system prompt, no history
+    const stateless = msg.stateless ?? profile.stateless ?? false
+    const messagesToSend = stateless
+      ? updatedSession.messages.slice(-1)
+      : updatedSession.messages
+
     let assistantContent = ''
     let completed = false
     const startTime = Date.now()
     const handle = adapter.sendMessage({
       systemPrompt: profile.systemPrompt,
-      messages: updatedSession.messages,
+      messages: messagesToSend,
       model,
       sessionMeta: updatedSession.adapterMeta,
       onChunk: (text: string) => {
