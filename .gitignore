@@ -1,0 +1,19 @@
+node_modules/
+dist/
+.superpowers/
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
+*.tsbuildinfo
+.env
+# compiled config output from tsconfig.node
+packages/client/vite.config.js
+packages/client/vite.config.js.map
+packages/client/vite.config.d.ts
+packages/client/vite.config.d.ts.map
+packages/client/tailwind.config.js
+packages/client/tailwind.config.js.map
+packages/client/tailwind.config.d.ts
+packages/client/tailwind.config.d.ts.map

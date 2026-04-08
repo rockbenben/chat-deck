@@ -1,0 +1,24 @@
+{
+  "name": "chat-deck",
+  "version": "0.1.0",
+  "description": "Local AI chat hub — one interface for all your providers, one click to start",
+  "author": "rockbenben",
+  "license": "MIT",
+  "keywords": ["ai", "chat", "claude", "gemini", "qwen", "ollama", "cli"],
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @chat-deck/server",
+    "build": "npm run build --workspaces --if-present",
+    "start": "node packages/server/dist/index.js",
+    "dev:server": "npm run dev -w @chat-deck/server"
+  },
+  "bin": {
+    "chat-deck": "./bin/cli.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
