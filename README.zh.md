@@ -1,5 +1,7 @@
 # ChatDeck
 
+> 365 开源计划 #006 · 本地 AI 聊天中心，一个界面管理所有 AI 服务
+
 本地 AI 对话中心。一个界面统一调用所有 AI，一键开聊。
 
 你的电脑上已经装了 Claude、Qwen 或 Ollama，但每次想用的时候都得开终端、敲命令、配参数。ChatDeck 提供一个 Web 界面，把每个**配置**都设置好：选好服务商、写好系统提示词，点一下就能直接对话。所有聊天记录按配置自动归档，随时可以回看。
@@ -78,6 +80,12 @@ packages/
   server/    Express + WebSocket 后端
   shared/    共享 TypeScript 类型定义
 ```
+
+## 关于 365 开源计划
+
+本项目是 [365 开源计划](https://github.com/rockbenben/365opensource) 的第 006 个项目。
+
+一个人 + AI，一年 300+ 个开源项目。[提交你的需求 →](https://my.feishu.cn/share/base/form/shrcnI6y7rrmlSjbzkYXh6sjmzb)
 
 ## 许可证
 

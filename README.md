@@ -1,5 +1,7 @@
 # ChatDeck
 
+> 365 Open Source Plan #006 · Local AI chat hub — one interface for all your providers
+
 A local AI chat hub. One interface for all your AI providers, one click to start.
 
 You already have Claude, Qwen, or Ollama installed on your machine. But every time you want to use them, you open a terminal, type commands, set up system prompts. ChatDeck gives you a web UI where each **Profile** is a ready-to-go AI setup: provider + system prompt, pre-configured. Click a profile, chat instantly. All conversations stay organized and easy to find later.
@@ -78,6 +80,12 @@ packages/
   server/    Express + WebSocket backend
   shared/    Shared TypeScript types
 ```
+
+## About 365 Open Source Plan
+
+This is project #006 of the [365 Open Source Plan](https://github.com/rockbenben/365opensource).
+
+One person + AI, 300+ open source projects in a year. [Submit your idea →](https://my.feishu.cn/share/base/form/shrcnI6y7rrmlSjbzkYXh6sjmzb)
 
 ## License
 
